@@ -26,7 +26,7 @@ test_labels = {}
 for transcription_id in test_set:
     with open(path_to_test / f"{transcription_id}.json", "r") as file:
         transcription = json.load(file)
-    
+
     test_labels[transcription_id] = [1] * len(transcription)
 
 with open("test_labels_naive_baseline.json", "w") as file:
@@ -46,10 +46,10 @@ X_training = []
 for transcription_id in training_set:
     with open(path_to_training / f"{transcription_id}.json", "r") as file:
         transcription = json.load(file)
-    
+
     for utterance in transcription:
         X_training.append(utterance["speaker"] + ": " + utterance["text"])
-    
+
     y_training += training_labels[transcription_id]
 
 X_training = bert.encode(X_training, show_progress_bar=True)
@@ -61,11 +61,11 @@ test_labels = {}
 for transcription_id in test_set:
     with open(path_to_test / f"{transcription_id}.json", "r") as file:
         transcription = json.load(file)
-    
+
     X_test = []
     for utterance in transcription:
         X_test.append(utterance["speaker"] + ": " + utterance["text"])
-    
+
     X_test = bert.encode(X_test)
 
     y_test = clf.predict(X_test)
